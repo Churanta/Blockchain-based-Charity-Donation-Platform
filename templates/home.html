@@ -4,6 +4,8 @@
     <title>Blockchain</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
   * {
   margin: 0;
   padding: 0;
@@ -127,7 +129,7 @@ body {
   
   /* hide scrollbar */
   ::-webkit-scrollbar {
-    width: 1px;
+    width: 5px;
     height: 1px;
   }
   
@@ -316,7 +318,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 0px;
 }
 
 .top-nav ul {
@@ -331,15 +333,52 @@ body {
   margin: 0 10px;
 }
 
-.left-align {
-  text-align: left;
+.top-nav li.left-align {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  margin-left: 10px;
 }
 
+.top-nav li.left-align h3 {
+  font-size: 24px;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.top-nav li.left-align img {
+  max-width: 80px;
+  max-height: 60px;
+  padding-right: 6px;
+}
 
 .top-nav li.right-align {
-  margin-left: 0; /* Reset the margin to align to the right */
-  margin-right: 10px;  /* Move the content to the right */
+  margin-left: 0;
+  margin-right: 2px;
 }
+
+.top-nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.top-nav ul li {
+  display: inline-block;
+}
+
+.top-nav a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.top-nav a:hover {
+  background-color: #000;
+}
+
 
 .top-nav a {
   text-decoration: none;
@@ -362,6 +401,7 @@ body {
 
 body {
   margin: 0;
+  font-family: 'Roboto Slab', sans-serif;
   padding-top: 60px; /* Adjust this value to give space for the fixed navigation bar */
 }
 
@@ -372,23 +412,26 @@ body {
 
 <body>
   <nav class="top-nav">
-    <div class="container">
-        
-      <ul>
-        
-        <li class="right-align"><a href="#">Home</a></li>
-        <li class="right-align"><a href="about.html">About</a></li>
-        <li class="right-align"><a href="#">Services</a></li>
-        <li class="right-align"><a href="#">Portfolio</a></li>
-        <li class="right-align"><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+  <div class="container">
+    <ul>
+      <li class="left-align">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" style="max-width: 80px; max-height: 80px; padding-right: 10px;" alt="QR Code">
+        <h3>Binary Brains</h3>
+      </li>
+      <li class="right-align"><a href="#">Home</a></li>
+      <li class="right-align"><a href="about.html">About</a></li>
+      <li class="right-align"><a href="#">Services</a></li>
+      <li class="right-align" ><a href="#">Portfolio</a></li>
+      <li class="right-align"><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
   <br>
   
 
 <div class="external">
-    <h1>BE SOMEONE'S REASON TO SMILE</h1>
+    <h1 style="font-family: 'Lora', serif; font-style: italic;" >Be Someone's Reason to Smile</h1>
 
     <div class="horizontal-scroll-wrapper">
         
@@ -506,10 +549,19 @@ body {
                     <li><a href=#>Server</a></li>
                 </ul>
             </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href=#>App development</a></li>
+                    <li><a href=#>web development</a></li>
+                    <li><a href=#>IOT based App and web</a></li>
+                    <li><a href=#>Server</a></li>
+                </ul>
+            </div>
             
         </div>
     </div><br><br><br>
-    <p><i>&copy; 2023 Phonitics. All Rights Reserved.</i></p>
+    <p><i>&copy; 2023 Binary Brains. All Rights Reserved.</i></p>
 </footer>
 </footer>
   

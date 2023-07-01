@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Payment APP</title>
-    
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
     <style>
       /* Styling for the popup window */
       #popup {
@@ -136,76 +136,117 @@
         <button class="custom-btn btn-5" onclick="closePopup()">Close</button>
       </div>
 
-      <script type="text/javascript">
-        // Define a global variable to store the user's wallet address
-        window.userWalletAddress = null;
-        const connectWallet = document.getElementById('connectWallet');
-        const walletAddress = document.getElementById('walletAddress');
-        const walletBalance = document.getElementById('walletBalance');
-        const popup = document.getElementById('popup');
-        const popupAmount = document.getElementById('popupAmount');
-        const popupTxId = document.getElementById('popupTxId');
+     <!-- ... Existing HTML code ... -->
 
-        // Function to check if MetaMask is installed
-        function checkInstalled() {
-          if (typeof window.ethereum === 'undefined') {
-            connectWallet.innerText = 'MetaMask is not installed. Please install it.';
-            connectWallet.classList.remove();
-            connectWallet.classList.add();
-            return false;
-          }
-          connectWallet.addEventListener('click', connectWalletwithMetaMask);
-        }
+<script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
 
-        // Function to connect the wallet with MetaMask
-        async function connectWalletwithMetaMask() {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-          .catch((e) => {
-            console.error(e.message);
-            return;
-          });
+<script type="text/javascript">
+  // Define a global variable to store the user's wallet address
+  window.userWalletAddress = null;
+  const connectWallet = document.getElementById('connectWallet');
+  const walletAddress = document.getElementById('walletAddress');
+  const walletBalance = document.getElementById('walletBalance');
+  const popup = document.getElementById('popup');
+  const popupAmount = document.getElementById('popupAmount');
+  const popupTxId = document.getElementById('popupTxId');
 
-          if (!accounts) { return; }
+  // Function to connect the wallet with MetaMask and initialize Web3
+  async function connectWalletwithMetaMask() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
 
-          window.userWalletAddress = accounts[0];
-          walletAddress.innerText = window.userWalletAddress;
+      try {
+        // Request access to the user's accounts
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
-          connectWallet.innerText = 'Sign Out';
-          connectWallet.removeEventListener('click', connectWalletwithMetaMask);
-          setTimeout(() => {
-            connectWallet.addEventListener('click', signOutOfMetaMask);
-          }, 200);
-        }
+        window.userWalletAddress = accounts[0];
+        walletAddress.innerText = window.userWalletAddress;
 
-        // Function to sign out of MetaMask
-        function signOutOfMetaMask() {
-          window.userwalletAddress = null;
-          walletAddress.innerText = '';
-          connectWallet.innerText = 'Connect Wallet';
+        connectWallet.innerText = 'Sign Out';
+        connectWallet.removeEventListener('click', connectWalletwithMetaMask);
+        setTimeout(() => {
+          connectWallet.addEventListener('click', signOutOfMetaMask);
+        }, 200);
+      } catch (error) {
+        console.error('Failed to connect to wallet:', error);
+      }
+    } else {
+      console.error('Web3 not available.');
+    }
+  }
 
-          connectWallet.removeEventListener('click', signOutOfMetaMask);
-          setTimeout(() => {
-            connectWallet.addEventListener('click', connectWalletwithMetaMask);
-          }, 200);
-        }
+  // Function to sign out of MetaMask
+  function signOutOfMetaMask() {
+    window.userWalletAddress = null;
+    walletAddress.innerText = '';
+    connectWallet.innerText = 'Connect Wallet';
 
-        // Function to check the wallet balance
-        async function checkBalance() {
-          let balance = await window.ethereum.request({ method: "eth_getBalance",
-            params: [
-              window.userWalletAddress,
-              'latest'
-            ]
-          }).catch((err)=> {
-            console.log(err)
-          });
+    connectWallet.removeEventListener('click', signOutOfMetaMask);
+    setTimeout(() => {
+      connectWallet.addEventListener('click', connectWalletwithMetaMask);
+    }, 200);
+  }
 
-          console.log(parseFloat((balance) / Math.pow(10,18)));
+  // Function to check the wallet balance
+  async function checkBalance() {
+    if (window.userWalletAddress) {
+      try {
+        const balance = await window.web3.eth.getBalance(window.userWalletAddress);
+        walletBalance.innerText = window.web3.utils.fromWei(balance, 'ether');
+      } catch (error) {
+        console.error('Failed to get wallet balance:', error);
+      }
+    }
+  }
 
-          walletBalance.innerText = parseFloat((balance) / Math.pow(10,18));
-        }
+  // Function to transfer funds
+  async function transferFunds() {
+    const recipientAddress = document.getElementById('recipientAddress').value;
+    const transferAmount = document.getElementById('transferAmount').value;
 
-        // Function to transfer funds
+    if (!recipientAddress || !transferAmount) {
+      return;
+    }
+
+    if (window.userWalletAddress) {
+      try {
+        const transactionParameters = {
+          from: window.userWalletAddress,
+          to: recipientAddress,
+          value: window.web3.utils.toWei(transferAmount, 'ether')
+        };
+
+        const txHash = await window.web3.eth.sendTransaction(transactionParameters);
+        
+        // Display the transaction details in the popup
+        popupAmount.innerText = `Amount: ${transferAmount} ETH`;
+        popupTxId.innerText = `Transaction ID: ${txHash}`;
+        popup.style.display = 'block';
+      } catch (error) {
+        document.getElementById('transferStatus').innerText = `Error: ${error.message}`;
+      }
+    } else {
+      console.error('Wallet not connected.');
+    }
+  }
+
+  // Function to close the popup
+  function closePopup() {
+    popup.style.display = 'none';
+  }
+
+  // Event listener when the DOM content is loaded to check if MetaMask is installed
+  window.addEventListener('DOMContentLoaded', () => {
+    connectWallet.addEventListener('click', connectWalletwithMetaMask);
+    checkBalance();
+
+    // Add event listeners to the buttons
+    document.getElementById('checkBalanceBtn').addEventListener('click', checkBalance);
+    document.getElementById('transferFundsBtn').addEventListener('click', transferFunds);
+    document.getElementById('closePopupBtn').addEventListener('click', closePopup);
+  });
+
+  // Function to transfer funds
         async function transferFunds() {
           const recipientAddress = document.getElementById('recipientAddress').value;
           const transferAmount = document.getElementById('transferAmount').value;
@@ -225,7 +266,6 @@
               method: 'eth_sendTransaction',
               params: [transactionParameters]
             });
-
             // Display the transaction details in the popup
             popupAmount.innerText = `Amount: ${transferAmount}`;
             popupTxId.innerText = `Transaction ID: ${txHash}`;
@@ -235,17 +275,7 @@
           }
         }
 
-        // Function to close the popup
-        function closePopup() {
-          popup.style.display = 'none';
-        }
-
-        // Event listener when the DOM content is loaded to check if MetaMask is installed
-        window.addEventListener('DOMContentLoaded', () => {
-          checkInstalled();
-        });
-
-        function copyTxId() {
+   function copyTxId() {
     const txId = popupTxId.innerText;
     navigator.clipboard.writeText(txId)
       .then(() => {
@@ -255,7 +285,8 @@
         console.error('Failed to copy transaction ID:', error);
       });
   }
-      </script>
+</script>
+
     </center>
   </body>
 </html>
