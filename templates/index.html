@@ -18,15 +18,15 @@
       
       /* Style for the transparent card */
       .card {
-       /* From https://css.glass */
-        background: rgba(255, 255, 255, 0.24);
+        /* From https://css.glass */
+        background: rgba(135, 206, 250, 0.21);
         border-radius: 16px;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(4.1px);
-        -webkit-backdrop-filter: blur(4.1px);
-        border: 1px solid rgba(255, 255, 255, 1);   
-        height:70%;
-        width: 85%;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(135, 206, 250, 0.3);
+        height:80%;
+        width: 75%;
       }
 
       /* 5 */
@@ -68,16 +68,31 @@
         width: 100%;
         transition: 800ms ease all;
       }
+      .custom-btn2 {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      color: #ffffff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .custom-btn2:hover {
+      background-color: #0056b3;
+    }
 
  
     </style>
   </head>
-  <body style="background-color:powderblue;">
+  <body style="background-color:#FAF0E6"><br><br><br>
     <center>
       <div class="card">
         <h1>Welcome to Binary Brains Payment System!</h1>
-        <button id='connectWallet' onclick="">Connect Wallet</button>
-        <button id='getBalance' onclick="checkBalance()">Get Balance of Wallet</button>
+        <button id='connectWallet' onclick=""class="custom-btn2">Connect Wallet</button>
+        <button id='getBalance' onclick="checkBalance()"class="custom-btn2">Get Balance of Wallet</button>
 
         <p id="walletAddress"></p>
         <p id="walletBalance"></p>
@@ -86,23 +101,27 @@
         
         <input type="text" id="recipientAddress" placeholder="Recipient Address" value="0x5c5e9dfed62b8c58555a094813e8ff2a8216c2be" disabled="disabled"><br><br>
         <input type="text" id="transferAmount" placeholder="Enter Amount"style="width: 300px;
-    height: 40px;
-    padding: 15px;
-    font-size: 18px;
-     border-radius: 25px;
-    " ><br><br>
+            height: 40px;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 25px;
+            " ><br><br>
         <button id='transferFunds' onclick="transferFunds()" Style="
-    display: inline-block;
-    padding: 12px 24px;
-    font-size: 16px;
-    color: #ffffff;
-    background: linear-gradient(45deg, #007bff, #00bfff);
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  ">Transfer Funds</button>
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 16px;
+        color: #ffffff;
+        background: linear-gradient(45deg, #007bff, #00bfff);
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        ">Transfer Funds</button>
         <p id="transferStatus"></p>
+
+        <p>-----OR-----</p>
+        <img src="{{ url_for('static', filename='images/QR.png') }}"  style="max-width: 150px;max-height: 150px;" alt="QR Code">
+        <p>To install MetaMask, click <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">here</a>.</p>
       </div>
 
       <!--Code for POPUP -->
