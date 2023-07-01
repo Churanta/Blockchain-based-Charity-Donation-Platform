@@ -4,6 +4,114 @@
     <title>Blockchain</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.cot {
+  margin: auto;
+  box-sizing: border-box;
+
+}
+
+.rw {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul {
+  list-style: none;
+  font-family: 'Poppins',
+    sans-serif;
+}
+
+.footer {
+  background: rgba(56, 51, 48, 0.8);
+    color: #000000;
+    text-align: center;
+  padding: 70px 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+
+.footer-col {
+  width: 25%;
+  padding: 0 15px;
+}
+
+.footer-col h4 {
+  font-size: 18px;
+  color: #fff;
+  text-transform: capitalize;
+  margin-bottom: 35px;
+  font-weight: 500;
+  position: relative;
+  font-family: 'Poppins',
+    sans-serif;
+}
+
+.footer-col h4::before {
+  content: '';
+  position: absolute;
+  left: 20;
+  bottom: -10px;
+  background-color: #e91e63;
+  height: 2px;
+  box-sizing: border-box;
+  width: 80px;
+  font-family: 'Poppins',
+    sans-serif;
+}
+
+.footer-col ul li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  font-size: 16px;
+  text-transform: capitalize;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 300;
+  color: #bbbbbb;
+  display: block;
+  transform: all 0.3s ease;
+  font-family: 'Poppins',
+    sans-serif;
+}
+
+.footer-col ul li a:hover {
+  color: #fff;
+  padding-left: 8px;
+  font-family: 'Poppins',
+    sans-serif;
+}
+
+.footer-col .social-links a {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0 10px 10px 0;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  transform: all 0.5s ease;
+  font-family: 'Poppins',
+    sans-serif;
+}
+
+.footer-col .social-links a:hover {
+  color: #24262b;
+  background-color: #fff;
+  font-family: 'Poppins',
+    sans-serif;
+}
 
     /*  */
 
@@ -11,7 +119,7 @@ body {
     font-family: Hepta Slab, sans-serif;
     font-weight: 500;
     background: #efecdb;
-    color: #5D4037;
+    color: #C38154;
   }
   * {
     box-sizing: border-box;
@@ -106,11 +214,16 @@ body {
     font-weight: 500;
     
   }
+
+
+
   h1 {
     text-align: center;
     font-weight:bold;
     font-size: 3rem;
   }
+
+
   
   .img-wrapper a {
     overflow: hidden;
@@ -218,6 +331,11 @@ body {
   margin: 0 10px;
 }
 
+.left-align {
+  text-align: left;
+}
+
+
 .top-nav li.right-align {
   margin-left: 0; /* Reset the margin to align to the right */
   margin-right: 10px;  /* Move the content to the right */
@@ -239,6 +357,9 @@ body {
   background-color: #583a21; /* Circular background on hover */
 }
 
+
+
+
 body {
   margin: 0;
   padding-top: 60px; /* Adjust this value to give space for the fixed navigation bar */
@@ -252,15 +373,18 @@ body {
 <body>
   <nav class="top-nav">
     <div class="container">
+        
       <ul>
+        
         <li class="right-align"><a href="#">Home</a></li>
-        <li class="right-align"><a href="#">About</a></li>
-
-        <li class="right-align"><a href="#">Donate</a></li>
-        <li class="right-align"><a href="contact.html">Contact us</a></li>
+        <li class="right-align"><a href="about.html">About</a></li>
+        <li class="right-align"><a href="#">Services</a></li>
+        <li class="right-align"><a href="#">Portfolio</a></li>
+        <li class="right-align"><a href="contact.html">Contact</a></li>
       </ul>
     </div>
   </nav>
+  <br>
   
 
 <div class="external">
@@ -337,19 +461,57 @@ body {
     
   </div>
 <br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<div id="floatingText">
-<h2 >ABOUT US</h2>
-<p >BINARY BRAINS exists to alleviate poverty by delivering impactful social initiatives in India. Established in 2023, Binary Brains enables individuals and institutions to donate funds to chosen causes, and delivers programs with high-impact outcomes across India. With a strong network of partners and a vast geographical presence, Binary Brains brings people and organizations closer to realizing a poverty-free India.</p>
+<br><br><br><br><br><br>
 
-</div>
+  <div id="floatingText">Welcome to our donation website dedicated to alleviating hunger among children. With your support, we can make a significant impact on the lives of these young ones and provide them with a brighter future. Together, let's take a stand against child hunger and make a lasting difference.</div>
+
 
   <div class="card">
     <h2>Donate Now</h2>
-
+    <p><i>"An individual's donation holds the power to transform lives. With a simple act of generosity, they can provide a ray of hope, nourishment, and education.
+      <br> It has the potential to lift someone out of despair, offer opportunities for growth, and create a ripple effect of positivity.
+      <br> Each donation has the potential to change a life, one person at a time."</i></p>
     <p>Your support can make a difference in someone's life. Click the button below to donate.</p>
     <a href="{{ url_for('payment') }}" target="_blank" rel="noopener">Donate</a>
   </div>
+  <!-- --------------------------Footer------------------------- -->
+  <footer class="footer" style="width: 100%;" id="contact" >
+    <div class="cot">
+        <div class="rw">
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href=#>about us</a></li>
+                    <li><a href=#>our services</a></li>
+                    <li><a href=#>privacy policy</a></li>
+                    <li><a href=#>programs</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Get Help</h4>
+                <ul>
+                    <li><a href=#>FAQ</a></li>
+                    <li><a href=#>Projects</a></li>
+                    <li><a href=#>Pricing</a></li>
+                    <li><a href=#>Status</a></li>
+                    <li><a href=#>Quality Check</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href=#>App development</a></li>
+                    <li><a href=#>web development</a></li>
+                    <li><a href=#>IOT based App and web</a></li>
+                    <li><a href=#>Server</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    </div><br><br><br>
+    <p><i>&copy; 2023 Phonitics. All Rights Reserved.</i></p>
+</footer>
+</footer>
   
   <!-- Your page content goes here -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
@@ -379,23 +541,9 @@ body {
   }
 });
 
+
 </script>
   </body>
   </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
