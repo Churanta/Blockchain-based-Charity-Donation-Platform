@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Payment APP</title>
+    
     <style>
       /* Styling for the popup window */
       #popup {
@@ -25,7 +26,7 @@
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
         border: 1px solid rgba(135, 206, 250, 0.3);
-        height:80%;
+        height:90%;
         width: 75%;
       }
 
@@ -118,10 +119,10 @@
         transition: background-color 0.3s ease;
         ">Transfer Funds</button>
         <p id="transferStatus"></p>
-
         <p>-----OR-----</p>
+        <p>If you dont have a account</p>
         <img src="{{ url_for('static', filename='images/QR.png') }}"  style="max-width: 150px;max-height: 150px;" alt="QR Code">
-        <p>To install MetaMask, click <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">here</a>.</p>
+        <p>Else, click <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">here</a>.</p>
       </div>
 
       <!--Code for POPUP -->
@@ -131,6 +132,7 @@
         <h2>Transaction Details</h2>
         <p id="popupAmount"></p>
         <p id="popupTxId"></p>
+        <button class="custom-btn btn-5" onclick="copyTxId()">Copy</button> <!-- New button -->
         <button class="custom-btn btn-5" onclick="closePopup()">Close</button>
       </div>
 
@@ -242,6 +244,17 @@
         window.addEventListener('DOMContentLoaded', () => {
           checkInstalled();
         });
+
+        function copyTxId() {
+    const txId = popupTxId.innerText;
+    navigator.clipboard.writeText(txId)
+      .then(() => {
+        alert('Transaction ID copied to clipboard!');
+      })
+      .catch((error) => {
+        console.error('Failed to copy transaction ID:', error);
+      });
+  }
       </script>
     </center>
   </body>
