@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blockchain</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+<style>
+
+    /*  */
+
+body {
+    font-family: Hepta Slab, sans-serif;
+    font-weight: 500;
+    background: #efecdb;
+    color: #5D4037;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* hide scrollbar */
+  ::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+  }
+  
+  ::-webkit-scrollbar-button {
+    width: 1px;
+    height: 1px;
+  }
+  .external {
+    overflow: hidden;
+    height: 100vh;
+  }
+  
+  .horizontal-scroll-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vh;
+    transform: rotate(-90deg) translate3d(0,-100vh,0);
+    transform-origin: right top;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    height: 100vw;
+    perspective: 1px;
+    transform-style: preserve-3d;
+    padding-bottom: 10rem;
+  }
+  .img-wrapper {
+    transform: rotate(90deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40vh;
+    transform-origin: 50% 50%;
+    transform: rotate(90deg) translateZ(.1px) scale(0.9) translateX(0px) translateY(-3vh);
+    transition: 1s;
+  }
+  
+  .img-wrapper:hover {
+   min-height: 65vh;
+  }
+  
+  .slower {
+    transform: rotate(90deg) translateZ(-.2px) scale(1.1) translateX(0%) translateY(-10vh);
+  }
+  .slower1 {
+    transform: rotate(90deg) translateZ(-.25px) scale(1.05) translateX(0%) translateY(8vh);
+  }
+  .slower2 {
+    transform: rotate(90deg) translateZ(-.3px) scale(1.3) translateX(0%) translateY(2vh);
+  }
+  .slower-down {
+    transform: rotate(90deg) translateZ(-.2px) scale(1.1) translateX(0%) translateY(16vh) ;
+  }
+  .faster {
+    transform: rotate(90deg) translateZ(.15px) scale(0.8) translateX(0%) translateY(14vh) ;
+  }
+  .faster1 {
+    transform: rotate(90deg) translateZ(.05px) scale(0.8) translateX(0%) translateY(10vh) ;
+  }
+  .fastest {
+    transform: rotate(90deg) translateZ(.22px) scale(0.7) translateX(-10vh) translateY(-15vh) ;
+  }
+  .vertical {
+     transform: rotate(90deg) translateZ(-.15px) scale(1.15) translateX(0%) translateY(0%) ;
+  }
+  .last {
+    transform: rotate(90deg) translateZ(-.2px) scale(1.1) translateX(25vh) translateY(-8vh) ;
+  }
+  .scroll-info, header {
+    position: absolute;
+    left: 1rem;
+  }
+  
+  
+  header {
+    bottom: 1rem;
+  }
+  .scroll-info {
+    top: 1rem;
+  }
+  a {
+    color: inherit;
+    font-weight: 500;
+    
+  }
+  h1 {
+    text-align: center;
+    font-weight:bold;
+    font-size: 3rem;
+  }
+  
+  .img-wrapper a {
+    overflow: hidden;
+    display: block;
+    padding: 1vh ;
+    background: #efecdb;
+    box-shadow: 0 10px 50px #5f2f1182;
+  }
+  img {
+    max-width: 45vh;
+    max-height: 50vh;
+    transition: .5s;
+    vertical-align: top;
+    filter: saturate(40%) sepia(30%) hue-rotate(5deg);
+  }
+  a:hover img {
+    filter: none;
+  }
+  p {
+    margin: 0;
+  }
+  .scroll-info {
+    display: flex;
+    align-items: center;
+  }
+  .icon svg {
+      width: 50px;
+      fill: currentcolor;
+  }
+  #floatingText {
+      position: relative;
+      bottom: 0;
+      left: 50%;
+      text-align: center;
+      padding-top: 5%;
+      padding-left: 5%;
+      padding-right: 5%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      opacity: 0;
+      z-index: 1; /* Add z-index to make it visible above other elements */
+    }
+    .card {
+  background: #fff;
+  padding: 20px;
+  margin: 20px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin-bottom: 20px;
+}
+
+.card a {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #5D4037;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.card a:hover {
+  background: #3E2723;
+}
+
+
+
+.top-nav {
+  background-color: #8b5f3c; /* Vintage color */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  transition: background-color 0.3s, opacity 0.3s; /* Add transition for background-color and opacity */
+}
+
+.top-nav.translucent {
+  background-color: rgba(139, 95, 60, 0.8); /* Translucent background color on scroll */
+  opacity: 0.9; /* Reduce opacity on scroll */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.top-nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.top-nav li {
+  margin: 0 10px;
+}
+
+.top-nav li.right-align {
+  margin-left: 0; /* Reset the margin to align to the right */
+  margin-right: 10px;  /* Move the content to the right */
+}
+
+.top-nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 50px;
+  padding: 0 10px;
+  transition: color 0.3s, background-color 0.3s; /* Add background-color transition */
+  border-radius: 5%; /* Make the background circular */
+}
+
+.top-nav a:hover {
+  color: #8b5f3c; /* Vintage highlight color */
+  background-color: #583a21; /* Circular background on hover */
+}
+
+body {
+  margin: 0;
+  padding-top: 60px; /* Adjust this value to give space for the fixed navigation bar */
+}
+
+
+</style>
+
+</head>
+
+<body>
+  <nav class="top-nav">
+    <div class="container">
+      <ul>
+        <li class="right-align"><a href="#">Home</a></li>
+        <li class="right-align"><a href="#">About</a></li>
+
+        <li class="right-align"><a href="#">Donate</a></li>
+        <li class="right-align"><a href="contact.html">Contact us</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+
+<div class="external">
+    <h1>BE SOMEONE'S REASON TO SMILE</h1>
+
+    <div class="horizontal-scroll-wrapper">
+        
+      <div class="img-wrapper slower">
+        <a href="https://www.giveindia.org/campaign/mission-10-million-meals" target="_blank" rel="noopener">
+            <img src="https://cdn.givind.org/static/images/campaign/mission-10-million-meals.jpg" alt="">
+        </a>
+      </div>
+  
+      <div class="img-wrapper faster">
+        <a href="https://sambodhmissiontrust.com/home?donate" target="_blank" rel="noopener">
+          <img src="https://sambodhmissiontrust.com/admin/asset/images/donate/nb.jpg" alt="">
+        </a>
+      </div>
+  
+      <div class="img-wrapper slower vertical">
+        <a href="https://ofhsoupkitchen.org/underprivileged-children" target="_blank" rel="noopener">
+          <img src="https://ofhsoupkitchen.org/wp-content/uploads/2021/07/image1.jpg" alt="">
+        </a>
+      </div>
+  
+      <div class="img-wrapper slower slower-down">
+        <a href="https://iycn.in/donations/charity-build-school-for-poor-children/" target="_blank" rel="noopener">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBMDD944YdhJmPedxVO-G8RgME40yACFliOw&usqp=CAU" alt="">
+        </a>
+      </div>
+  
+      <div class="img-wrapper">
+        <a href="https://www.globalgiving.org/projects/sponsor-a-child-in-india-for-education-day-care-centers/reports/?pageNo=2" target="_blank" rel="noopener">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZjGg3py3CBY-oIUgnkSty44PTNXYPGBSong&usqp=CAU" alt="">
+        </a>
+      </div>
+  
+      <div class="img-wrapper slower">
+        <a href="https://www.indiatoday.in/india/story/happy-fridge-hungry-1612215-2019-10-23" target="_blank" rel="noopener">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3K8FmYmANjPZw2_LolWRUksNW88nt54CIM41tWq6LTPQVSKuJVcDIR4qcbK26V7g8fP8&usqp=CAU" alt="">
+        </a>
+      </div>
+  
+      <div class="img-wrapper faster1">
+        <a href="https://give.do/blog/top-10-education-ngos-rejuvenating-education-in-india/" target="_blank" rel="noopener">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl8gEGXDuLyDzYufws2Hj3HDImStkHEsUeWQ&usqp=CAU" alt="">
+        </a>
+      </div>
+      
+      <div class="img-wrapper slower slower2">
+        <a href="https://secure.givelively.org/donate/new-hope-association-inc" target="_blank" rel="noopener">
+          <img src="https://images.givelively.org/nonprofits/a1b0993e-b833-4251-b992-089387be93c4/background_image/new-hope-association-inc_processed_d818d32c7093cb2312b6344c9e62739fd88aa863016e32133445458bc471a095_background_image.jpeg" alt="">
+        </a>
+      </div>
+      
+      <div class="img-wrapper">
+        <a href="https://www.hindustantimes.com/pune-news/social-worker-runs-free-pune-school-for-kids-of-poor-single-mothers/story-0JMmdBlTS8O6N4dMYWflhO.html" target="_blank" rel="noopener">
+          <img src="https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/11/13/Pictures/assignment-name-in-brief_859a11d8-c853-11e7-855e-d08d9ee048bd.jpg" alt="">
+        </a>
+      </div>
+      
+      <div class="img-wrapper slower">
+        <a href="https://yallagive.com/en/campaign/Mashals-Campaign-for-Educating-Underprivileged-Children-in-Pakistan-95695" target="_blank" rel="noopener">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUJIo0RwpyvKzyF5c617t2GogHsWv0eAXNVA&usqp=CAU" alt="">
+        </a>
+      </div>
+      
+      <div class="img-wrapper slower last">
+        <a href="https://www.csrmandate.org/fight-for-zero-hunger-tiki-partners-with-akshaya-patra-to-provide-meals-to-underprivileged-children/" target="_blank" rel="noopener">
+          <img src="https://www.csrmandate.org/wp-content/uploads/2022/03/Tiki-Partners-with-Akshaya-Patra-Foundation-feed-underprivileged-children-through-its-ongoing-campaign-TikiCares2-1024x708.jpg" alt="">
+        </a>
+      </div>
+    </div>
+    
+  </div>
+<br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div id="floatingText">
+<h2 >ABOUT US</h2>
+<p >BINARY BRAINS exists to alleviate poverty by delivering impactful social initiatives in India. Established in 2023, Binary Brains enables individuals and institutions to donate funds to chosen causes, and delivers programs with high-impact outcomes across India. With a strong network of partners and a vast geographical presence, Binary Brains brings people and organizations closer to realizing a poverty-free India.</p>
+
+</div>
+
+  <div class="card">
+    <h2>Donate Now</h2>
+
+    <p>Your support can make a difference in someone's life. Click the button below to donate.</p>
+    <a href="index.html" target="_blank" rel="noopener">Donate</a>
+  </div>
+  
+  <!-- Your page content goes here -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  var floatingText = document.getElementById("floatingText");
+
+  gsap.to(floatingText, {
+    opacity: 1,
+    y: "-100%",
+    duration: 1,
+    scrollTrigger: {
+      trigger: floatingText,
+      start: "bottom 80%", // Adjust the start position as needed
+      end: "top 20%", // Adjust the end position as needed
+      toggleActions: "play none none reset"
+    }
+  });
+  window.addEventListener("scroll", function() {
+  var topNav = document.querySelector(".top-nav");
+  if (window.scrollY > 0) {
+    topNav.classList.add("translucent");
+  } else {
+    topNav.classList.remove("translucent");
+  }
+});
+
+</script>
+  </body>
+  </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

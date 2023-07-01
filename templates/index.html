@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>MetaMask Connection Page</title>
+    <title>Payment APP</title>
     <style>
       /* Styling for the popup window */
       #popup {
@@ -18,11 +18,15 @@
       
       /* Style for the transparent card */
       .card {
-        background-color: lightblue;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 20px;
-        opacity: 0.8;
+       /* From https://css.glass */
+        background: rgba(255, 255, 255, 0.24);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(4.1px);
+        -webkit-backdrop-filter: blur(4.1px);
+        border: 1px solid rgba(255, 255, 255, 1);   
+        height:70%;
+        width: 85%;
       }
 
       /* 5 */
@@ -50,7 +54,7 @@
         height: 2px;
         width: 0;
         background: #f0094a;
-        box-shadow: -1px -1px 5px 0px #fff, 7px 7px 20px 0px #0003, 4px 4px 5px 0px #0002;
+        box-shadow: -1px -1px 5px 0px #0000ff, 7px 7px 20px 0px #0003, 4px 4px 5px 0px #0002;
         transition: 400ms ease all;
       }
       .btn-5:after {
@@ -64,12 +68,14 @@
         width: 100%;
         transition: 800ms ease all;
       }
+
+ 
     </style>
   </head>
-  <body>
+  <body style="background-color:powderblue;">
     <center>
       <div class="card">
-        <h1>Connect Your MetaMask Wallet Here!</h1>
+        <h1>Welcome to Binary Brains Payment System!</h1>
         <button id='connectWallet' onclick="">Connect Wallet</button>
         <button id='getBalance' onclick="checkBalance()">Get Balance of Wallet</button>
 
@@ -77,9 +83,25 @@
         <p id="walletBalance"></p>
 
         <!-- New input fields for transfer -->
-        <input type="text" id="recipientAddress" placeholder="Recipient Address">
-        <input type="text" id="transferAmount" placeholder="Transfer Amount">
-        <button id='transferFunds' onclick="transferFunds()">Transfer Funds</button>
+        
+        <input type="text" id="recipientAddress" placeholder="Recipient Address" value="0x5c5e9dfed62b8c58555a094813e8ff2a8216c2be" disabled="disabled"><br><br>
+        <input type="text" id="transferAmount" placeholder="Enter Amount"style="width: 300px;
+    height: 40px;
+    padding: 15px;
+    font-size: 18px;
+     border-radius: 25px;
+    " ><br><br>
+        <button id='transferFunds' onclick="transferFunds()" Style="
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #ffffff;
+    background: linear-gradient(45deg, #007bff, #00bfff);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  ">Transfer Funds</button>
         <p id="transferStatus"></p>
       </div>
 
