@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        html {
+            width: 100%;
+            height: 100%;
+            position: relative;
+          }
+          
+          body {
+            position: absolute;
+            background: #333;
+            box-sizing: content-box;
+            top: 50%;
+            left: 50%;
+            margin: -240px 0 0 -180px;
+          }
+          
+          h1 {
+            padding: 0 0 30px 0;
+            display: block;
+            font-family: Trebuchet MS;
+            color: white;
+            text-transform: uppercase;
+          }
+          
+          .margin {
+            margin: 0 15%;
+          }
+          
+          *:focus {
+            outline: none;
+          }
+          
+          .inputGroup {
+            position: relative;
+            margin-bottom: 30px;
+          }
+          
+          .inputGroup label {
+            position: absolute;
+            top: 0;
+            left: 5px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-family: Trebuchet MS;
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+          }
+          
+          .inputGroup input,
+          .inputGroup textarea {
+            display: block;
+            width: 280px;
+            border: none;
+            border-bottom: 1px solid #757575;
+            left: 25px;
+            padding: 5px;
+            font-family: Trebuchet MS;
+            background: none;
+            color: #ccc;
+          }
+          
+          .inputGroup input:focus ~ label,
+          .inputGroup input:valid ~ label,
+          .inputGroup textarea:focus ~ label,
+          .inputGroup textarea:valid ~ label {
+            top: -20px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+          }
+          
+          .inputGroup input:focus ~ .inputBar:before,
+          .inputGroup input:focus ~ .inputBar:after,
+          .inputGroup textarea:focus ~ .inputBar:before,
+          .inputGroup textarea:focus ~ .inputBar:after {
+            width: 50%;
+          }
+          
+          .inputGroup textarea {
+            height: 100px;
+            width: 280px;
+            overflow: auto;
+            resize: none;
+          }
+          
+          .inputGroup .inputBar {
+            position: relative;
+            display: block;
+            width: 290px;
+          }
+          
+          .inputGroup .inputBar:before,
+          .inputGroup .inputBar:after {
+            content: "";
+            display: block;
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            background: white;
+            height: 2px;
+            transition: all 0.2s ease;
+          }
+          
+          .inputGroup .inputBar:after {
+            right: 50%;
+          }
+          
+          .inputGroup .inputBar:before {
+            left: 50%;
+          }
+          
+          button {
+            background-color: white;
+            border: none;
+            padding: 15px 0;
+            margin: 0;
+            width: 290px;
+            color: #3c3c3c;
+            text-transform: uppercase;
+            font-family: Trebuchet MS;
+            font-size: 15px;
+            border-radius: 5px;
+            box-shadow: 0 6px #a1a1a1;
+            position: relative;
+            cursor: pointer;
+          }
+          
+          button:hover {
+            box-shadow: 0 4px #a1a1a1;
+            top: 2px;
+          }
+          
+          button:active {
+            top: 6px;
+            box-shadow: 0 0;
+          }
+        </style>
+    </head>
+    <body>
+<h1>Contact Us</h1>
+<div class="margin">
+  <div class="inputGroup">      
+    <input type="text" required />
+    <span class="inputBar"></span>
+    <label>Name</label>
+  </div>
+
+  <div class="inputGroup">      
+    <input type="text" required />
+    <span class="inputBar"></span>
+    <label>Email</label>
+  </div>
+
+  <div class="inputGroup">      
+    <textarea type="textarea" required></textarea>
+    <span class="inputBar"></span>
+    <label>Message</label>
+  </div>
+
+  <button>Send</button>
+</div>
+</body>
+</html>

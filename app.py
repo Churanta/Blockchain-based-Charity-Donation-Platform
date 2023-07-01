@@ -8,3 +8,7 @@ def index():
 @app.route('/payment')
 def payment():
     return render_template('index.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
