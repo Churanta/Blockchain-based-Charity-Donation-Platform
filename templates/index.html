@@ -1,0 +1,207 @@
+<html>
+  <head>
+    <title>MetaMask Connection Page</title>
+    <style>
+      /* Styling for the popup window */
+      #popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #ffffff;
+        padding: 20px;
+        border: 1px solid #000000;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+      }
+      
+      /* Style for the transparent card */
+      .card {
+        background-color: lightblue;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px;
+        opacity: 0.8;
+      }
+
+      /* 5 */
+      .btn-5 {
+        width: 130px;
+        height: 40px;
+        line-height: 42px;
+        padding: 0;
+        border: none;
+        /* Updated gradient colors to blue */
+        background: rgb(0, 123, 255);
+        background: linear-gradient(0deg, rgba(0, 123, 255, 1) 0%, rgba(0, 174, 255, 1) 100%);
+      }
+      .btn-5:hover {
+        color: #f0094a;
+        background: transparent;
+        box-shadow: none;
+      }
+      .btn-5:before,
+      .btn-5:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2px;
+        width: 0;
+        background: #f0094a;
+        box-shadow: -1px -1px 5px 0px #fff, 7px 7px 20px 0px #0003, 4px 4px 5px 0px #0002;
+        transition: 400ms ease all;
+      }
+      .btn-5:after {
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
+      }
+      .btn-5:hover:before,
+      .btn-5:hover:after {
+        width: 100%;
+        transition: 800ms ease all;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <div class="card">
+        <h1>Connect Your MetaMask Wallet Here!</h1>
+        <button id='connectWallet' onclick="">Connect Wallet</button>
+        <button id='getBalance' onclick="checkBalance()">Get Balance of Wallet</button>
+
+        <p id="walletAddress"></p>
+        <p id="walletBalance"></p>
+
+        <!-- New input fields for transfer -->
+        <input type="text" id="recipientAddress" placeholder="Recipient Address">
+        <input type="text" id="transferAmount" placeholder="Transfer Amount">
+        <button id='transferFunds' onclick="transferFunds()">Transfer Funds</button>
+        <p id="transferStatus"></p>
+      </div>
+
+      <!--Code for POPUP -->
+      <div id="popup">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_6LimOm.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"    autoplay></lottie-player>
+        <h2>Transaction Details</h2>
+        <p id="popupAmount"></p>
+        <p id="popupTxId"></p>
+        <button class="custom-btn btn-5" onclick="closePopup()">Close</button>
+      </div>
+
+      <script type="text/javascript">
+        // Define a global variable to store the user's wallet address
+        window.userWalletAddress = null;
+        const connectWallet = document.getElementById('connectWallet');
+        const walletAddress = document.getElementById('walletAddress');
+        const walletBalance = document.getElementById('walletBalance');
+        const popup = document.getElementById('popup');
+        const popupAmount = document.getElementById('popupAmount');
+        const popupTxId = document.getElementById('popupTxId');
+
+        // Function to check if MetaMask is installed
+        function checkInstalled() {
+          if (typeof window.ethereum === 'undefined') {
+            connectWallet.innerText = 'MetaMask is not installed. Please install it.';
+            connectWallet.classList.remove();
+            connectWallet.classList.add();
+            return false;
+          }
+          connectWallet.addEventListener('click', connectWalletwithMetaMask);
+        }
+
+        // Function to connect the wallet with MetaMask
+        async function connectWalletwithMetaMask() {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+          .catch((e) => {
+            console.error(e.message);
+            return;
+          });
+
+          if (!accounts) { return; }
+
+          window.userWalletAddress = accounts[0];
+          walletAddress.innerText = window.userWalletAddress;
+
+          connectWallet.innerText = 'Sign Out';
+          connectWallet.removeEventListener('click', connectWalletwithMetaMask);
+          setTimeout(() => {
+            connectWallet.addEventListener('click', signOutOfMetaMask);
+          }, 200);
+        }
+
+        // Function to sign out of MetaMask
+        function signOutOfMetaMask() {
+          window.userwalletAddress = null;
+          walletAddress.innerText = '';
+          connectWallet.innerText = 'Connect Wallet';
+
+          connectWallet.removeEventListener('click', signOutOfMetaMask);
+          setTimeout(() => {
+            connectWallet.addEventListener('click', connectWalletwithMetaMask);
+          }, 200);
+        }
+
+        // Function to check the wallet balance
+        async function checkBalance() {
+          let balance = await window.ethereum.request({ method: "eth_getBalance",
+            params: [
+              window.userWalletAddress,
+              'latest'
+            ]
+          }).catch((err)=> {
+            console.log(err)
+          });
+
+          console.log(parseFloat((balance) / Math.pow(10,18)));
+
+          walletBalance.innerText = parseFloat((balance) / Math.pow(10,18));
+        }
+
+        // Function to transfer funds
+        async function transferFunds() {
+          const recipientAddress = document.getElementById('recipientAddress').value;
+          const transferAmount = document.getElementById('transferAmount').value;
+
+          if (!recipientAddress || !transferAmount) {
+            return;
+          }
+
+          const transactionParameters = {
+            from: window.userWalletAddress,
+            to: recipientAddress,
+            value: '0x' + (parseInt(transferAmount * Math.pow(10, 18)).toString(16))
+          };
+
+          try {
+            const txHash = await window.ethereum.request({
+              method: 'eth_sendTransaction',
+              params: [transactionParameters]
+            });
+
+            // Display the transaction details in the popup
+            popupAmount.innerText = `Amount: ${transferAmount}`;
+            popupTxId.innerText = `Transaction ID: ${txHash}`;
+            popup.style.display = 'block';
+          } catch (error) {
+            document.getElementById('transferStatus').innerText = `Error: ${error.message}`;
+          }
+        }
+
+        // Function to close the popup
+        function closePopup() {
+          popup.style.display = 'none';
+        }
+
+        // Event listener when the DOM content is loaded to check if MetaMask is installed
+        window.addEventListener('DOMContentLoaded', () => {
+          checkInstalled();
+        });
+      </script>
+    </center>
+  </body>
+</html>
